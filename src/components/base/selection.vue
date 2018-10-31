@@ -5,7 +5,7 @@
       <div class="selection-component">
         <div class="selection-component-selected" @click="selectAction">{{selected}}<em></em> </div>
         <ul class="selection-component-list" v-if="isShow">
-          <li v-for="(item,index) in selectionList" :key="index" @click="changeSelected(item)">{{item}}</li>
+          <li v-for="(item,index) in selectionList" :key="index" @click="changeSelected(item)">{{item.name}}</li>
         </ul>
       </div>
 
@@ -16,12 +16,10 @@
 <script>
   export default {
     components: {},
+    props:['selectionList'],
     data() {
       return {
         selected: "教育版",
-        selectionList: [
-          '教育版', '入门版', '家庭版', '豪华版'
-        ],
         isShow: false
       };
     },
