@@ -1,46 +1,29 @@
 <template>
-  <div class="analysis">
-    <h2>流量分析</h2>
-    <p class="analysis-text">是指在获得网站访问量基本数据的情况下对有关数据进行统计、分析，从中发现用户访问网站的规律，并将这些规律与网络营销策略等相结合，从而发现目前网络营销活动中可能存在的问题，并为进一步修正或重新制定网络营销策略提供依据。当然这样的定义是站在网络营销管理的角度来考虑的</p>
-    <counter @on-change="getProductMsg('buyNumber',$event)"></counter>
-    <selection :selectionList="selectionList" :productType="productType" @on-change="getProductMsg('productType',$event)"></selection>
-    <radio-com :analysisYear="analysisYear" @on-change="getProductMsg('productDate',$event)"></radio-com>
-    <multi-com :productVersionList="productVersionList" @on-change="getProductMsg('productVersionArr',$event)"></multi-com>
-    <div class="details-group">
-      <span>总价：</span>
-      <div class="analysis-price">{{productPrice}}元</div>
+  <div class="pay-form">
+    <div class="analysis-pay-shade" v-if="isShowPayForm" @click="hidePayForm">
     </div>
-    <div class="details-group">
-      <span>&nbsp;</span>
-      <div class="analysis-buy" @click="showPayForm">
-        立即购买
-      </div>
+    <div class="analysis-pay" v-if="isShowPayForm">
+      <p class="analysis-pay-close" @click="hidePayForm">x</p>
+      <ul class="analysis-pay-list">
+        <li>购买数量</li>
+        <li>产品类型</li>
+        <li>有效时间</li>
+        <li>产品版本</li>
+        <li>总价</li>
+      </ul>
+      <ul class="analysis-pay-list analysis-pay-msg">
+        <li>{{buyNumber}}</li>
+        <li>{{selectionList[productType].name}}</li>
+        <li>{{analysisYear[productDate].name}}</li>
+        <li><span v-for="(item,index) in productVersionArr" :key="index">{{productVersionList[item].name}}</span></li>
+        <li>{{productPrice}}</li>
+      </ul>
+      <h3>请选择银行</h3>
+      <ul class="choose-bank">
+        <li v-for="(item,index) in payWayLists" :key="index">{{item.name}}</li>
+      </ul>
     </div>
-    <drop-dialog :isShow="isShowPayForm" @isClose="hidePayForm">
-      <div class="analysis-pay">
-        <ul class="analysis-pay-list">
-          <li>购买数量</li>
-          <li>产品类型</li>
-          <li>有效时间</li>
-          <li>产品版本</li>
-          <li>总价</li>
-        </ul>
-        <ul class="analysis-pay-list analysis-pay-msg">
-          <li>{{buyNumber}}</li>
-          <li>{{selectionList[productType].name}}</li>
-          <li>{{analysisYear[productDate].name}}</li>
-          <li><span v-for="(item,index) in productVersionArr" :key="index">{{productVersionList[item].name}}</span></li>
-          <li>{{productPrice}}</li>
-        </ul>
-        <h3>请选择银行</h3>
-        <ul class="choose-bank">
-          <li v-for="(item,index) in payWayLists" :key="index" @click="choosePayWay(index)" :class="{active:index === payWay}">{{item.name}}</li>
-        </ul>
-        <div class="buy-now">
-          立即购买
-        </div>
-      </div>
-    </drop-dialog>
+
   </div>
 </template>
 
@@ -61,24 +44,24 @@
     },
     data() {
       return {
-        payWay:0,
         isShowPayForm: false,
         productPrice: 100,
         buyNumber: 1, //购买数量
         productType: 0, //产品类型
         productDate: 0, //有效时间
         productVersionArr: [0], //产品版本,多选
-        payWayLists: [{
-            name: '银行卡支付',
-            value: 101
+        payWayLists:[
+          {
+            name:'银行卡支付',
+            value:101
           },
           {
-            name: '支付宝支付',
-            value: 102
+            name:'支付宝支付',
+            value:102
           },
           {
-            name: '微信支付',
-            value: 103
+            name:'微信支付',
+            value:103
           },
         ],
         selectionList: [{
@@ -157,9 +140,6 @@
       },
       hidePayForm() {
         this.isShowPayForm = false
-      },
-      choosePayWay(index){
-        this.payWay = index
       }
     },
     computed: {},
@@ -171,44 +151,31 @@
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-.buy-now{
-background: #4fc08d;
-    color: #fff;
-    display: inline-block;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-top: 30px;
-} 
   .analysis-text {
     margin: 10px 0;
     line-height: 1.6;
   }
-
-  h3 {
-    font-size: 16px;
+h3{
+      font-size: 16px;
     font-weight: bold;
     margin-top: 30px;
-  }
-
-  .choose-bank {
-    overflow: hidden;
-    margin-top: 16px;
-
-    li {
-      float: left;
-      width: 150px;
-      text-align: center;
-      padding: 6px 0;
-      border: 1px solid #ebebeb;
-      cursor: pointer;
-
-      &.active {
-        color: #fff;
-        background: #4fc08d;
-      }
+}
+.choose-bank{
+  overflow: hidden;
+  margin-top: 16px;
+  li{
+    float: left;
+    width: 150px;
+    text-align: center;
+    padding:6px 0;
+    border:1px solid #ebebeb;
+    cursor: pointer;
+    &.active{
+      color: #fff;
+      background: #4fc08d;
     }
   }
-
+}
   .details-group {
     margin: 30px 0;
 
@@ -243,8 +210,16 @@ background: #4fc08d;
   }
 
   .analysis-pay {
-
+    width: 50%;
+    position: fixed;
+    max-height: 50%;
+    overflow: auto;
     background: #fff;
+    top: 20%;
+    left: 50%;
+    margin-left: -25%;
+    z-index: 10;
+    border: 2px solid #464068;
     padding: 2%;
     line-height: 1.6;
   }
@@ -262,7 +237,6 @@ background: #4fc08d;
   .analysis-pay-list {
     background: #4fc08d;
     overflow: hidden;
-    margin-top: 30px;
 
     li {
       float: left;
@@ -278,7 +252,6 @@ background: #4fc08d;
 
   .analysis-pay-msg {
     background: #fff;
-    margin-top: 0;
 
     li {
       border-color: #ebebeb;

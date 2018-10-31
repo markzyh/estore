@@ -1,27 +1,19 @@
 <template>
-  <transition name="drop">
-    <div class="login-form">
-      <div class="login-form-wide" v-if="isShow" @click="closeLoginForm"></div>
-      <div class="login-panel">
-        <transition name="drop">
-          <div v-if="isShow" class="login-panel-inside">
-            <p class="login-panel-close" @click="closeLoginForm">x</p>
-            <div class="login-group">
-              <label for="userName">用户名:</label><input type="text" v-model="userNameVal">
-              <p class="check-text">{{userNameError.errorText}}</p>
-            </div>
-            <div class="login-group">
-              <label for="password">密码:</label><input type="password" v-model="passwordVal">
-              <p class="check-text">{{passwordError.errorText}}</p>
-            </div>
-            <input type="button" value="登录" @click="checkLogin">
-            <slot></slot>
-          </div>
-        </transition>
+  <div class="login-form">
+
+    <div class="login-panel-inside">
+      <div class="login-group">
+        <label for="userName">用户名:</label><input type="text" v-model="userNameVal">
+        <p class="check-text">{{userNameError.errorText}}</p>
       </div>
+      <div class="login-group">
+        <label for="password">密码:</label><input type="password" v-model="passwordVal">
+        <p class="check-text">{{passwordError.errorText}}</p>
+      </div>
+      <input type="button" value="登录" @click="checkLogin">
 
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>
@@ -47,10 +39,6 @@
             })
         }
       },
-      closeLoginForm() {
-        console.log("loginformclick")
-        this.$emit('isClose')
-      }
     },
     computed: {
       userNameError() {
@@ -128,29 +116,21 @@
     color: #333;
   }
 
-  .login-form-wide {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    opacity: 0.3;
-    left: 0;
-    top: 0;
-    z-index: 5
-  }
+
   .login-panel {
     width: 50%;
     position: fixed;
     max-height: 50%;
-    overflow: auto;   
+    overflow: auto;
     top: 20%;
     left: 50%;
     margin-left: -25%;
-    z-index: 10;   
+    z-index: 10;
   }
-  .login-panel-inside{
-  border: 2px solid #464068;
-  padding: 2%;
+
+  .login-panel-inside {
+    border: 2px solid #464068;
+    padding: 2%;
     line-height: 1.6;
     background: #fff;
   }

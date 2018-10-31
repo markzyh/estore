@@ -8,11 +8,11 @@
     </div>
       <!-- <login-form :isShow="isShowLoginForm" @isClose="closeForm('isShowLoginForm')" @hasLogin="hasLogin"></login-form> -->
       <!-- <reg-form :isShow="isShowRegForm" @isClose="closeForm('isShowRegForm')"></reg-form> -->
-      <drop-dialog>
-        <login-form :isShow="isShowLoginForm" @isClose="closeForm('isShowLoginForm')" @hasLogin="hasLogin"></login-form>
+      <drop-dialog :isShow="isShowLoginForm" @isClose="closeForm('isShowLoginForm')" @hasLogin="hasLogin">
+        <login-form ></login-form>
       </drop-dialog> 
-      <drop-dialog>
-        <reg-form :isShow="isShowRegForm" @isClose="closeForm('isShowRegForm')"></reg-form>
+      <drop-dialog :isShow="isShowRegForm" @isClose="closeForm('isShowRegForm')">
+        <reg-form ></reg-form>
       </drop-dialog> 
   </div>
 </template>
