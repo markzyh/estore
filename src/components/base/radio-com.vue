@@ -46,6 +46,7 @@
       border:1px solid #ebebeb;
       margin:0 10px;
       border-radius: 5px;
+      cursor: pointer;
     }
     li.checked{
           border-color: #4fc08d;

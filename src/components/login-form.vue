@@ -1,26 +1,33 @@
 <template>
-  <div class="login-form" v-if="isShow">
-    <div class="login-form-wide" @click="closeLoginForm"></div>
-    <div class="login-panel">
-      <p class="login-panel-close" @click="closeLoginForm">x</p>
-      <div class="login-group">
-        <label for="userName">用户名:</label><input type="text" v-model="userNameVal">
-        <p class="check-text">{{userNameError.errorText}}</p>
+  <transition name="drop">
+    <div class="login-form">
+      <div class="login-form-wide" v-if="isShow" @click="closeLoginForm"></div>
+      <div class="login-panel">
+        <transition name="drop">
+          <div v-if="isShow" class="login-panel-inside">
+            <p class="login-panel-close" @click="closeLoginForm">x</p>
+            <div class="login-group">
+              <label for="userName">用户名:</label><input type="text" v-model="userNameVal">
+              <p class="check-text">{{userNameError.errorText}}</p>
+            </div>
+            <div class="login-group">
+              <label for="password">密码:</label><input type="password" v-model="passwordVal">
+              <p class="check-text">{{passwordError.errorText}}</p>
+            </div>
+            <input type="button" value="登录" @click="checkLogin">
+            <slot></slot>
+          </div>
+        </transition>
       </div>
-      <div class="login-group">
-        <label for="password">密码:</label><input type="password" v-model="passwordVal">
-        <p class="check-text">{{passwordError.errorText}}</p>
-      </div>
-      <input type="button" value="登录" @click="checkLogin">
-      <slot></slot>
+
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
-import axios from "axios"
+  import axios from "axios"
   export default {
-    props:['isShow'],
+    props: ['isShow'],
     data() {
       return {
         userNameVal: "",
@@ -31,13 +38,13 @@ import axios from "axios"
       checkLogin() {
         if (!this.userNameError.status || !this.passwordError.status) {
           alert("部分选项未通过");
-        }else{
+        } else {
           axios
-          .post('/userMsg')//假数据,登录名和密码
-          .then( res =>{
-            this.$emit('hasLogin',res)
-            console.log(res)
-          })
+            .post('/userMsg') //假数据,登录名和密码
+            .then(res => {
+              this.$emit('hasLogin', res)
+              console.log(res)
+            })
         }
       },
       closeLoginForm() {
@@ -79,7 +86,8 @@ import axios from "axios"
           this.passflag = true;
         }
         return {
-          errorText,status
+          errorText,
+          status
         };
       }
     },
@@ -90,6 +98,32 @@ import axios from "axios"
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+  .drop-enter {
+    /*进入之前*/
+    transform: translateY(-500px);
+  }
+
+  .drop-enter-active {
+    /*进入过程*/
+    transition: all 0.5s ease;
+  }
+
+  .drop-enter-to {
+    /*进入之后*/
+  }
+
+  .drop-leave {
+    /*离开之前,在离开被触时*/
+  }
+
+  .drop-leave-active {
+    transition: all 0.5s ease;
+  }
+
+  .drop-leave-to {
+    transform: translateY(-500px);
+  }
+
   .login-form {
     color: #333;
   }
@@ -104,20 +138,21 @@ import axios from "axios"
     top: 0;
     z-index: 5
   }
-
   .login-panel {
     width: 50%;
     position: fixed;
     max-height: 50%;
-    overflow: auto;
-    background: #fff;
+    overflow: auto;   
     top: 20%;
     left: 50%;
     margin-left: -25%;
-    z-index: 10;
-    border: 2px solid #464068;
-    padding: 2%;
+    z-index: 10;   
+  }
+  .login-panel-inside{
+  border: 2px solid #464068;
+  padding: 2%;
     line-height: 1.6;
+    background: #fff;
   }
 
   .login-group {
