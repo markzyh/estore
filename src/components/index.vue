@@ -7,6 +7,7 @@
       <banner></banner>
       <product-lists></product-lists>
     </div>
+    <date-picker></date-picker>
   </div>
 </template>
 
@@ -15,11 +16,12 @@ import axios from "axios";
 import SiderBar from "../components/siderbar";
 import Banner from "../components/banner";
 import ProductLists from "../components/productLists";
+import DatePicker from "../components/date-picker";
 export default {
   components: {
     SiderBar,
     Banner,
-    ProductLists
+    ProductLists,DatePicker
   },
   name: "HelloWorld",
   data() {
