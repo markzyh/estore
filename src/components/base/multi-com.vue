@@ -3,7 +3,7 @@
     <div class="details-group">
       <span>产品版本：</span>
       <ul class="multi-component-panel">
-        <li v-for="(item,index) in productVersion" :key="index" :class="{checked:isIndexOf(index)}" @click="chooseVersion(index)">{{item.name}}</li>
+        <li v-for="(item,index) in productVersionList" :key="index" :class="{checked:isIndexOf(index)}" @click="chooseVersion(index)">{{item.name}}</li>
         <!-- <li v-for="(item,index) in productVersion" :key="index" :class="{checked:item.isChecked}" @click="chooseVersion(index)">{{item.name}}</li> -->
       </ul>
     </div>
@@ -12,27 +12,11 @@
 <script>
 export default {
   components: {},
+  props:['productVersionList'],
   data() {
     return {
       nowIndex: [0],
       versionArray: [],
-      productVersion: [
-        {
-          name: "客户版",
-          value: 0,
-          isChecked: true
-        },
-        {
-          name: "代理商版",
-          value: 1,
-          isChecked: false
-        },
-        {
-          name: "专家版",
-          value: 2,
-          isChecked: false
-        }
-      ]
     };
   },
   methods: {
@@ -46,7 +30,7 @@ export default {
           }
         })
       }
-      console.log(this.nowIndex);
+      this.$emit('on-change',this.nowIndex)
     },
     /* chooseVersion(index){
         this.productVersion[index].isChecked = !this.productVersion[index].isChecked

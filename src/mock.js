@@ -72,9 +72,16 @@ const userMsg = function () {
     }
     return Data
 }
+const getPrice = function () {
+    let Data = {
+        price : 789
+    }
+    return Data
+}
 // Mock.mock( url, post/get , 返回的数据)；
 Mock.mock('/user/login', 'post', productData)
 Mock.mock('/user/query', 'post', productData)
 Mock.mock('/productLists', 'post', productLists)
 Mock.mock('/newsLists', 'post', newsLists)
 Mock.mock('/userMsg', 'post', userMsg)
+Mock.mock('/getPrice', 'post', getPrice)

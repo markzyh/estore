@@ -3,9 +3,9 @@
     <div class="details-group">
       <span>产品类型：</span>
       <div class="selection-component">
-        <div class="selection-component-selected" @click="selectAction">{{selected}}<em></em> </div>
+        <div class="selection-component-selected" @click="selectAction">{{selectionList[productType].name}}<em></em> </div>
         <ul class="selection-component-list" v-if="isShow">
-          <li v-for="(item,index) in selectionList" :key="index" @click="changeSelected(item)">{{item.name}}</li>
+          <li v-for="(item,index) in selectionList" :key="index" @click="changeSelect(index)">{{item.name}}</li>
         </ul>
       </div>
 
@@ -16,10 +16,9 @@
 <script>
   export default {
     components: {},
-    props:['selectionList'],
+    props:['selectionList','productType'],
     data() {
-      return {
-        selected: "教育版",
+      return {        
         isShow: false
       };
     },
@@ -27,8 +26,8 @@
       selectAction() {
         this.isShow = !this.isShow
       },
-      changeSelected(attr){
-        this.selected  = attr
+      changeSelect(attr){
+        this.$emit('on-change',attr)
         this.selectAction()
       }
     },

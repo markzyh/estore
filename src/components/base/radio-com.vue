@@ -12,34 +12,21 @@
 <script>
   export default {
     components: {},
+    props:['analysisYear'],
     data() {
       return {
         nowIndex:1,
-        analysisYear:[
-          {
-            name:'半年',
-            checked:true
-          },
-          {
-            name:'一年',
-            checked:false
-          },
-          {
-            name:'三年',
-            checked:false
-          },
-        ],
       };
     },
     methods: {
-
       chooseYear(index){
           if(index === this.nowIndex){
             this.nowIndex = false
             console.log(this.nowIndex)
           }else{
             this.nowIndex = index
-          }    
+          }  
+          this.$emit('on-change',this.nowIndex)  
       },
     },
     mounted() {
