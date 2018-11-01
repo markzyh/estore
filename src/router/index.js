@@ -7,17 +7,23 @@ import Count from '@/components/count'
 import Forecats from '@/components/forecast'
 import Publish from '@/components/analysis'
 import OrderList from '@/components/order-list'
+import TestVuex from '@/components/test-vuex'
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   routes: [
-    {
+     {
       path: '/',
       name: 'IndexPage',
       component: IndexPage
     },
+/*     {
+      path: '/',
+      name: 'TestVuex',
+      component: TestVuex
+    }, */
     {
       path: '/orderList',
       name: 'OrderList',

@@ -3,11 +3,38 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Vuex from 'vuex'
 import axios from 'axios'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 // require styles
 import 'swiper/dist/css/swiper.css'
-
+Vue.use(Vuex)
+let store = new Vuex.Store({
+  state:{
+    totalPrice:0
+  },
+  getters:{
+    getTotal(state){
+      return state.totalPrice
+    }
+  },
+  mutations:{
+    increment(state,price){
+      state.totalPrice += price
+    },
+    decrement(state,price){
+      state.totalPrice -= price
+    }
+  },
+  actions:{
+    incre(state,price){
+      state.commit('increment',price)
+    },
+    decre(state,price){
+      state.commit('decrement',price)
+    },
+  }
+})
 Vue.use(VueAwesomeSwiper, /* { default global options } */)
 require('./mock.js')
 
@@ -19,6 +46,7 @@ Vue.prototype.axios = axios
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
