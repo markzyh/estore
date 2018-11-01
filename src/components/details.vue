@@ -52,13 +52,14 @@ export default {
     };
   },
   computed: {
-    activeImg() {
+     activeImg() {//forEach没有返回值
       for(var i = 0;i<this.detailsLists.length;i++){
         if(this.detailsLists[i].link == this.$route.path){
+          console.log(i)
           return this.detailsLists[i].img
         }
       } 
-    }
+    } 
   },
   methods: {
   },

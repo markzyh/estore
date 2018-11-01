@@ -44,8 +44,9 @@
         </div>
       </div>
     </drop-dialog>
-    <drop-dialog :isShow="isShowPayForm">
-
+    <drop-dialog :isShow="isShowPayConfirm">
+        <h3>请检查您的支付状态</h3>
+        <p class="pay-confirm-button" @click="confirmOrder">支付成功</p><p class="pay-confirm-button">支付失败</p>
     </drop-dialog>
   </div>
 </template>
@@ -68,6 +69,7 @@
     data() {
       return {
         payWay:0,
+        isShowPayConfirm:false,
         isShowPayForm: false,
         productPrice: 100,
         buyNumber: 1, //购买数量
@@ -138,23 +140,12 @@
       };
     },
     methods: {
-      /* confirmOrder(){
-        let orderMessage = {
-          buyNumber: this.buyNumber,
-          productType: this.productType,
-          productDate: this.productDate,
-          productVersionArr: this.productVersionArr.join(','),
-          payWayId:this.payWayId
-        }
-        axios
-          .get('/getOrderId')
-          .then( res =>{
-            //console.log(res.data.orderId)
-            this.orderId = res.data.orderId
-          }).catch( err =>{
-            console.log(err)
-          })
-      }, */
+      confirmOrder(){
+        this.isShowPayConfirm = false
+        this.$router.push({
+          path: '/orderList'
+        })
+      },
       createOrder() {
         let orderMessage = {
           buyNumber: this.buyNumber,
@@ -171,6 +162,8 @@
           }).catch( err =>{
             console.log(err)
           })
+        this.isShowPayConfirm = true
+        this.isShowPayForm = false
       },
       getProductMsg(attr, data) {
         this[attr] = data;
@@ -215,6 +208,15 @@
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+.pay-confirm-button{
+background: #4fc08d;
+    color: #fff;
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin:10px;
+
+}
 .buy-now{
 background: #4fc08d;
     color: #fff;
