@@ -36,10 +36,16 @@
         <ul class="choose-bank">
           <li v-for="(item,index) in payWayLists" :key="index" @click="choosePayWay(index)" :class="{active:index === payWay}">{{item.name}}</li>
         </ul>
-        <div class="buy-now">
-          立即购买
+        <!-- <div class="buy-now" @click="confirmOrder">
+          确认购买
+        </div> -->
+        <div class="buy-now" @click="createOrder">
+          确认购买
         </div>
       </div>
+    </drop-dialog>
+    <drop-dialog :isShow="isShowPayForm">
+
     </drop-dialog>
   </div>
 </template>
@@ -68,9 +74,11 @@
         productType: 0, //产品类型
         productDate: 0, //有效时间
         productVersionArr: [0], //产品版本,多选
+        payWayId:101,
+        orderId:'',
         payWayLists: [{
             name: '银行卡支付',
-            value: 101
+            value: 101  
           },
           {
             name: '支付宝支付',
@@ -130,6 +138,40 @@
       };
     },
     methods: {
+      /* confirmOrder(){
+        let orderMessage = {
+          buyNumber: this.buyNumber,
+          productType: this.productType,
+          productDate: this.productDate,
+          productVersionArr: this.productVersionArr.join(','),
+          payWayId:this.payWayId
+        }
+        axios
+          .get('/getOrderId')
+          .then( res =>{
+            //console.log(res.data.orderId)
+            this.orderId = res.data.orderId
+          }).catch( err =>{
+            console.log(err)
+          })
+      }, */
+      createOrder() {
+        let orderMessage = {
+          buyNumber: this.buyNumber,
+          productType: this.productType,
+          productDate: this.productDate,
+          productVersionArr: this.productVersionArr.join(','),
+          payWayId:this.payWayId
+        }
+        axios
+          .get('/getOrderId')
+          .then( res =>{
+            console.log(res.data.orderId)
+            this.orderId = res.data.orderId
+          }).catch( err =>{
+            console.log(err)
+          })
+      },
       getProductMsg(attr, data) {
         this[attr] = data;
         this.getProductPrice()
@@ -160,6 +202,8 @@
       },
       choosePayWay(index){
         this.payWay = index
+        this.payWayId = this.payWayLists[index].value
+        //console.log(this.payWayId)
       }
     },
     computed: {},

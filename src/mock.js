@@ -78,6 +78,12 @@ const getPrice = function () {
     }
     return Data
 }
+const getOrderId = function(){
+    let Data = {
+        orderId:81154321581134
+    }
+    return Data
+}
 // Mock.mock( url, post/get , 返回的数据)；
 Mock.mock('/user/login', 'post', productData)
 Mock.mock('/user/query', 'post', productData)
@@ -85,3 +91,4 @@ Mock.mock('/productLists', 'post', productLists)
 Mock.mock('/newsLists', 'post', newsLists)
 Mock.mock('/userMsg', 'post', userMsg)
 Mock.mock('/getPrice', 'post', getPrice)
+Mock.mock('/getOrderId', 'get', getOrderId)
