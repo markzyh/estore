@@ -19,6 +19,7 @@
     methods:{
       incrementTen(){
         this.$store.dispatch('incre',this.num)
+        //console.log(0)
       },
       decrementTen(){
         this.$store.dispatch('decre',this.num)
