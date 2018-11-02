@@ -14,16 +14,16 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [
-/*      {
+     {
       path: '/',
       name: 'IndexPage',
       component: IndexPage
-    }, */
-     {
+    },
+/*     {
       path: '/',
       name: 'TestVuex',
       component: TestVuex
-    },
+    }, */
     {
       path: '/orderList',
       name: 'OrderList',
